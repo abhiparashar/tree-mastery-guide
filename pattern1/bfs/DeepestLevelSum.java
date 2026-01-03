@@ -19,34 +19,56 @@ public class DeepestLevelSum {
         }
     }
 
+    // public int deepestLeavesSum(TreeNode root) {
+    // List<List<Integer>> result = new ArrayList<>();
+    // int sum = 0;
+    // if (root == null) {
+    // return sum;
+    // }
+    // Queue<TreeNode> queue = new LinkedList<>();
+    // queue.offer(root);
+    // while (!queue.isEmpty()) {
+    // int levelSize = queue.size();
+    // List<Integer> list = new ArrayList<>();
+    // for (int i = 0; i < levelSize; i++) {
+    // TreeNode node = queue.poll();
+    // list.add(node.val);
+    // if (node.left != null)
+    // queue.offer(node.left);
+    // if (node.right != null) {
+    // queue.offer(node.right);
+    // }
+    // }
+    // result.add(list);
+    // }
+    // Collections.reverse(result);
+    // List<Integer> lastArr = result.get(0);
+    // for (int i = 0; i < lastArr.size(); i++) {
+    // sum = sum + lastArr.get(i);
+    // }
+    // return sum;
+    // }
+
     public int deepestLeavesSum(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
         int sum = 0;
-        if (root == null) {
-            return sum;
-        }
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
+
         while (!queue.isEmpty()) {
+            sum = 0; // Reset for each level!
             int levelSize = queue.size();
-            List<Integer> list = new ArrayList<>();
+
             for (int i = 0; i < levelSize; i++) {
                 TreeNode node = queue.poll();
-                list.add(node.val);
+                sum += node.val;
+
                 if (node.left != null)
                     queue.offer(node.left);
-                if (node.right != null) {
+                if (node.right != null)
                     queue.offer(node.right);
-                }
             }
-            result.add(list);
         }
-        Collections.reverse(result);
-        List<Integer> lastArr = result.get(0);
-        for (int i = 0; i < lastArr.size(); i++) {
-            sum = sum + lastArr.get(i);
-        }
-        return sum;
+        return sum; // Last level's sum
     }
 
     public static void main(String[] args) {
