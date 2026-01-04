@@ -19,34 +19,40 @@ public class EvenOddTree {
     public boolean isEvenOddTree(TreeNode root) {
         if (root == null)
             return true;
-
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
         int level = 0;
-
         while (!queue.isEmpty()) {
-            int levelSize = queue.size();
-            int prev = (level % 2 == 0) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
-
-            for (int i = 0; i < levelSize; i++) {
-                TreeNode node = queue.poll();
-
-                if (level % 2 == 0) {
-                    // Even level: must be ODD value and INCREASING
-                    if (node.val % 2 == 0 || node.val <= prev)
+            if (level % 2 == 0) {
+                int levelSize = queue.size();
+                int prev = Integer.MIN_VALUE;
+                for (int i = 0; i < levelSize; i++) {
+                    TreeNode node = queue.poll();
+                    if (node.val % 2 != 0 && node.val > prev) {
+                        if (node.left != null)
+                            queue.offer(node.left);
+                        if (node.right != null)
+                            queue.offer(node.right);
+                    } else {
                         return false;
-                } else {
-                    // Odd level: must be EVEN value and DECREASING
-                    if (node.val % 2 != 0 || node.val >= prev)
-                        return false;
+                    }
+                    prev = node.val;
                 }
-
-                prev = node.val;
-
-                if (node.left != null)
-                    queue.offer(node.left);
-                if (node.right != null)
-                    queue.offer(node.right);
+            } else {
+                int levelSize = queue.size();
+                int prev = Integer.MAX_VALUE;
+                for (int i = 0; i < levelSize; i++) {
+                    TreeNode node = queue.poll();
+                    if (node.val % 2 == 0 && node.val < prev) {
+                        if (node.left != null)
+                            queue.offer(node.left);
+                        if (node.right != null)
+                            queue.offer(node.right);
+                    } else {
+                        return false;
+                    }
+                    prev = node.val;
+                }
             }
             level++;
         }

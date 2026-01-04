@@ -1,18 +1,18 @@
 package pattern1.dfs;
 
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    public TreeNode(int val) {
-        this.val = val;
-        this.left = null;
-        this.right = null;
-    }
-}
-
 public class TreeTraversalDemo {
+    static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        public TreeNode(int val) {
+            this.val = val;
+            this.left = null;
+            this.right = null;
+        }
+    }
+
     public void preorder(TreeNode root) {
         if (root == null)
             return;
