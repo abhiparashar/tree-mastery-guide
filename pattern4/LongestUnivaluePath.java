@@ -1,6 +1,8 @@
 package pattern4;
 
 public class LongestUnivaluePath {
+    private int maxPath = 0;
+
     static class TreeNode {
         int val;
         TreeNode left;
@@ -13,10 +15,8 @@ public class LongestUnivaluePath {
         }
     }
 
-    private int maxPath = 0;
-
     public int longestUnivaluePath(TreeNode root) {
-        int maxPath = 0;
+        maxPath = 0;
         if (root == null)
             return 0;
         dfs(root);
@@ -27,18 +27,18 @@ public class LongestUnivaluePath {
         if (root == null)
             return 0;
 
-        dfs(root.left);
-        dfs(root.right);
+        int left = dfs(root.left);
+        int right = dfs(root.right);
 
         int leftPath = 0;
         int rightPath = 0;
 
         if (root.left != null && root.val == root.left.val) {
-            leftPath = leftPath + 1;
+            leftPath = left + 1;
         }
 
         if (root.right != null && root.val == root.right.val) {
-            rightPath = rightPath + 1;
+            rightPath = right + 1;
         }
 
         // Update max path (path that goes through current node)
